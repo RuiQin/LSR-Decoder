@@ -1,0 +1,33 @@
+This repository contains the project LSR-Decoder, which is to read LSR file(contains weather reports) and decode the file into separate records, predict their categories like hail, heat, according to their remarks, then insert records into postgreSQL database.
+
+It includes files: 
+
+1). ReadLSR
+Read one LSR file and import the records into postgreSQL database. 
+The command has one argument, which is the path of the file:
+>>>python ReadLSR.py 'data/2015010101.LSR'
+>>>
+****** read file: data/2015010101.LSR
+Start inserting data into database ...
+Finish inserting.
+
+2). ReadFilesInDir
+Read all LSR files in one directory. 
+>>>python ReadFilesInDir.py 'data'
+
+3). ProcessDecodedData
+Contains all functions that process the decoded records.
+
+4). findCategory
+Given the remark, find the corresponding category
+
+5). Dictionary
+Includes two dictionaries, one is the event and their Ncategory, the other is months and their number.
+
+6). connectDatabase
+insert records into the database. 
+
+7). prediction_model.pkl
+This is the trained model used to predict category.
+
+To run the decoder, you need to install two python packages, scikit-learn (used for the prediction model) and psycopg2 (connect to database)
