@@ -107,7 +107,7 @@ def readLSRFile(fileLocation):
             oneRecord = []                     
             text = originaltext                # make a copy of the original text including the header, issuingInfo and title
             #event time
-            while (len(records) > 0 and isNum(records[0]) == False):
+            while (len(records) > 0 and not isNum(records[0])):
                 records = records[1:]
             timeEnd = 0
             while timeEnd < len(records) and timeEnd < 7:
@@ -134,7 +134,7 @@ def readLSRFile(fileLocation):
             records = records[timeEnd:].strip()  # start from event    
             eventLocStart = 10   # special case SNOW_24, start from 10 characters
             while (eventLocStart < len(records) and eventLocStart < 17):  
-                if isNum(records[eventLocStart]) == True:
+                if isNum(records[eventLocStart]):
                     break
                 eventLocStart = eventLocStart + 1      
             event = records[0:eventLocStart].strip()
@@ -145,7 +145,7 @@ def readLSRFile(fileLocation):
             city_latLon = records[0: dateStart]
             LatLonStart = 17  #escapse the number in city 
             while LatLonStart+2 < len(city_latLon):
-                if city_latLon[LatLonStart+2] == '.' and isNum(city_latLon[LatLonStart]) == True:
+                if city_latLon[LatLonStart+2] == '.' and isNum(city_latLon[LatLonStart]):
                     break  
                 else:
                     LatLonStart = LatLonStart + 1     
@@ -205,7 +205,7 @@ def readLSRFile(fileLocation):
             oneRecord.append(issuingOffice)
             oneRecord.append(issuingDateTime)
             oneRecord.append(issuingTimeZone)
-            oneRecord.append(text.strip())           
+            oneRecord.append(text.strip())         
             recordsInOneFile.append(oneRecord) 
     
     beforeRemoved = len(recordsInOneFile)        
@@ -214,7 +214,7 @@ def readLSRFile(fileLocation):
     if removeNo > 0:
         print 'removed', removeNo, 'duplicate records'
     # insert data into table lsr in database
-    query = "INSERT INTO lsr2 (date_time, time_zone, city, county, state, latitude, longitude, event_type, magnitude, source, remarks, issuing_nws_office, issuing_date_time, issuing_time_zone, original_report_text) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO lsr (date_time, time_zone, city, county, state, latitude, longitude, event_type, magnitude, source, remarks, issuing_nws_office, issuing_date_time, issuing_time_zone, original_report_text) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     insert(recordsInOneFile, query)
         
 if __name__=="__main__":

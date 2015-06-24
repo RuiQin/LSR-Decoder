@@ -24,14 +24,14 @@ def isNum(ch):
 def isANumber(s):
     i = 0
     while i < len(s):
-        if isNum(s[i]) == True:
+        if isNum(s[i]):
             i = i + 1
         else:
             break
     if i < len(s) and s[i] == '.':
         i = i + 1
     while i < len(s):
-        if isNum(s[i]) == True:
+        if isNum(s[i]):
             i = i + 1
         else:
             return False
@@ -88,9 +88,9 @@ def generateRemarks(event,remark):
 def processMagnitude(m):
     if len(m) == 0:
         return m
-    if isAlph(m[1]) == True or m[1] == '-':  # EF0 or M-11 F 
+    if isAlph(m[1]) or m[1] == '-':  # EF0 or M-11 F 
         return m
-    elif isNum(m[0]) == True:  # 0 MPH
+    elif isNum(m[0]):  # 0 MPH
         return m
     else:
         return m[1:]
